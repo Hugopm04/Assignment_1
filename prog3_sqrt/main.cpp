@@ -34,6 +34,12 @@ int main() {
 
     // starter code populates array with random input values
     values[i] = .001f + 2.998f * static_cast<float>(rand()) / RAND_MAX;
+
+    // Second question code populates array with 1s (which is the starting guess)
+    values[i] = 1;
+
+    // Third question code populates arrray with 3 - 1e-5 (Farthest point from initial guess)
+    values[i] = 3 - 1e-5;
   }
 
   // generate a gold version to check results
