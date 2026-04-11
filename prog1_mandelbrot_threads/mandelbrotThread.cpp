@@ -30,6 +30,9 @@ void workerThreadStart(WorkerArgs *const args) {
   // program that uses two threads, thread 0 could compute the top
   // half of the image and thread 1 could compute the bottom half.
 
+  // Task 3, added the included CycleTimer to time each thread separately
+  // This is the start for the timer
+  double threadTimerStart = CycleTimer::currentSeconds();
   // Task 1, added the rows per thread and start row so that it could calculate the amount of rows and decide the amount
   // of rows per thread. Rows per thread calculates the amount of rows that each thread has, and startrow decides where
   // the thread will start.
@@ -54,6 +57,13 @@ void workerThreadStart(WorkerArgs *const args) {
     args->maxIterations,
     args->output);
 
+  // The stop for the timer to compare to the start
+  double threadTimerStop = CycleTimer::currentSeconds();
+
+  //Print for the thread, had to add a \n for easier reading
+  printf("Thread %d: time = %.3f ms\n",
+    args->threadId,
+    (threadTimerStop - threadTimerStart) * 1000);
 }
 
 //

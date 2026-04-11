@@ -15,3 +15,48 @@ The code that I made for task 1 should work for task 2 as well as long as one sp
 This is the graph that was created and from it one can see that the speedup is not linear, but has some bumps on the way depending on the amount of threads. The significant ones are 3, 16 and 24.
 
 The amount of threads seems to however lead to an increase in performance in every scenario except for 3 threads. My best explanation for this phenomenon is that the sections are not evenly difficult to process. I say this due to how the picture looks, some rows are nearly fully black while other rows are mostly white, and since the brightness of each pixel is proportiojnal to the computational cost, this means that the mostly white rows will take way longer than the nearly black ones. When the picture is divided in certain numbers of threads some threads will get a way whiter row than others, and in these scenarios the other threads will have to wait for that one complex one. Thus, I also expect the three thread scenario to be so slow due to the second thread getting the center of the picture. When that happens in gets nearly all the difficult pixels, while they were split evenly in the two thread scenario. 
+
+**Task 3**
+
+I added the timer to the program and to test my theory I ran it withe 2 and 3 threads. I didn't include the \n first which made the output near impossible to read, but once it was added the print proved my point.
+
+***./mandelbrot -t 2***                                                                                  
+
+Thread 0: time = 116.592 ms
+Thread 1: time = 117.116 ms
+
+Thread 0: time = 115.638 ms
+Thread 1: time = 115.977 ms
+
+Thread 0: time = 115.302 ms
+Thread 1: time = 116.068 ms
+
+Thread 0: time = 116.094 ms
+Thread 1: time = 116.856 ms
+
+Thread 0: time = 116.171 ms
+Thread 1: time = 116.167 ms
+
+***./mandelbrot -t 3***
+
+Thread 2: time = 45.643 ms
+Thread 0: time = 46.040 ms
+Thread 1: time = 142.608 ms
+
+Thread 2: time = 45.296 ms
+Thread 0: time = 45.387 ms
+Thread 1: time = 141.417 ms
+
+Thread 0: time = 45.288 ms
+Thread 2: time = 45.428 ms
+Thread 1: time = 141.171 ms
+
+Thread 0: time = 45.908 ms
+Thread 2: time = 45.977 ms
+Thread 1: time = 140.801 ms
+
+Thread 2: time = 46.110 ms
+Thread 0: time = 46.525 ms
+Thread 1: time = 144.131 ms
+
+As seen in the output, thread 1 in the three thread version gets the majority of the workload, and because of that it is around three times slower than the other two threads. As also seen when compared to the version with two threads, it is around 25-30ms slower than each of the threads in the two thread version. That explains why the three thread process is slower than the two thread one. 
