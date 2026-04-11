@@ -30,13 +30,27 @@ void workerThreadStart(WorkerArgs *const args) {
   // program that uses two threads, thread 0 could compute the top
   // half of the image and thread 1 could compute the bottom half.
 
-  printf("Hello world from thread %d\n", args->threadId);
+  // Task 1, added the rows per thread and start row so that it could calculate the amount of rows and decide the amount
+  // of rows per thread. Rows per thread calculates the amount of rows that each thread has, and startrow decides where
+  // the thread will start.
+  int rowsPerThread = args->height / args->numThreads;
+  int startRow = args->threadId * rowsPerThread;
 
+
+  // This dedicates the amount of rows for each thread, but incase the number is not evenly divisible, the last thread
+  // gets the leftover rows.
+  int numberOfRows;
+  if (args->threadId == args->numThreads - 1)
+  {
+    numberOfRows = args->height - startRow;
+  } else
+  {
+    numberOfRows = rowsPerThread;
+  }
   mandelbrotSerial(
     args->x0, args->y0, args->x1, args->y1,
     args->width, args->height,
-    // Maybe?
-    0, args->height,
+    startRow, numberOfRows,
     args->maxIterations,
     args->output);
 
