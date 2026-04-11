@@ -36,13 +36,13 @@ void workerThreadStart(WorkerArgs *const args) {
   // Task 1, added the rows per thread and start row so that it could calculate the amount of rows and decide the amount
   // of rows per thread. Rows per thread calculates the amount of rows that each thread has, and startrow decides where
   // the thread will start.
-  int rowsPerThread = args->height / args->numThreads;
-  int startRow = args->threadId * rowsPerThread;
+  // int rowsPerThread = args->height / args->numThreads;
+  // int startRow = args->threadId * rowsPerThread;
 
 
   // This dedicates the amount of rows for each thread, but incase the number is not evenly divisible, the last thread
   // gets the leftover rows.
-  int numberOfRows;
+  /*int numberOfRows;
   if (args->threadId == args->numThreads - 1)
   {
     numberOfRows = args->height - startRow;
@@ -56,6 +56,19 @@ void workerThreadStart(WorkerArgs *const args) {
     startRow, numberOfRows,
     args->maxIterations,
     args->output);
+  */
+
+  // The replacement for assigning the rows to the threads. This for loop gives each thread the nth row, where n is the amount of threads.
+  // So when you run the program with 4 threads thread one would get rows 0, 4, 8...
+  // This means that no thread will get purely black (easy) rows, but that each thread gets around the same amount of difficult rows.
+  for (int row = args->threadId; row < args->height; row += args->numThreads)
+  {
+    mandelbrotSerial(args->x0, args->y0, args->x1, args->y1,
+    args->width, args->height,
+    row, 1,
+    args->maxIterations,
+    args->output);
+  }
 
   // The stop for the timer to compare to the start
   double threadTimerStop = CycleTimer::currentSeconds();
@@ -73,7 +86,7 @@ void workerThreadStart(WorkerArgs *const args) {
 // Threads of execution are created by spawning std::threads.
 void mandelbrotThread(int numThreads, float x0, float y0, float x1, float y1,
                       int width, int height, int maxIterations, int output[]) {
-  static constexpr int MAX_THREADS = 32;
+  static constexpr int MAX_THREADS = 64;
 
   if (numThreads > MAX_THREADS) {
     fprintf(stderr, "Error: Max allowed threads is %d\n", MAX_THREADS);

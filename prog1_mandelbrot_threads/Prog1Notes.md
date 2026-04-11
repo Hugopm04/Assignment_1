@@ -60,3 +60,13 @@ Thread 0: time = 46.525 ms
 Thread 1: time = 144.131 ms
 
 As seen in the output, thread 1 in the three thread version gets the majority of the workload, and because of that it is around three times slower than the other two threads. As also seen when compared to the version with two threads, it is around 25-30ms slower than each of the threads in the two thread version. That explains why the three thread process is slower than the two thread one. 
+
+**Task 4**
+
+To improve the speed I first tried to figure out the smartest way, but got stuck on an idea of either splitting up the hardest central part of the picture or to try and detect the whitest areas. The second idea came after I realized that the first would not work for the view 2 series. But since there was a hint about a possible solution that was fairly simple and straight forward I forgot both of those ideas. 
+
+My following idea came from the first one, but instead, what if I could just make sure that each thread got parts from all over the picture instead of just a bunch of rows that are after one another. So my idea was to just make the threads process every other row, or actually every n:th row, where n is the number of threads. And this idea seemed to work, since with a number of 8 threads I got a 7.37x speedup on the view 2, and a 7.24x speedup on view 1. This compared to the 4.1x speedup with the previous method is very significant. The prints for the threads are also way more balanced now, which explains the speedup.
+
+**Task 5**
+
+I changed the MAX limit to 64 and tried running it with 32 and 64 on both views, but as I expected it did not affect the speedup in any significant way. View 1 got a 14.44x with 32 threads, and a 14.76x one with 64, while view 2 got 12.96x with 32 threads, and 12.99x with 64 threads. I expected this since the amount of software threads only adds to the scheduling queue, but does not actually process it any faster. 
