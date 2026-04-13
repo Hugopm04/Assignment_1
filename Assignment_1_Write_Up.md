@@ -3,7 +3,7 @@
 **Group Members**
 - Behroz Karim - 2502071
 - Hasnain Ajmal -
-- Hugo -
+- Hugo Pérez Muñoz - 2501103 
 - Talha Rizwan - 
 - Max Nummila- 2202236
 ---
