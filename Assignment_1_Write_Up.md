@@ -5,7 +5,7 @@
 - Hasnain Ajmal -
 - Hugo -
 - Talha Rizwan - 
-- Max -
+- Max Nummila- 2202236
 ---
 
 ## System Information
