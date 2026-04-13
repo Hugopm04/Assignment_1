@@ -281,6 +281,60 @@ So in short: threads are a heavy, OS-level primitive where we're explicitly crea
 
 ---
 
+## Program 3: Iterative sqrt
+
+### Task 3
+
+#### Task 1
+
+```cpp
+/*
+Task 1 Output
+[sqrt serial]:          [691.818] ms
+[sqrt ispc]:            [138.840] ms
+[sqrt task ispc]:       [12.267] ms
+                                (4.98x speedup from ISPC)
+                                (56.40x speedup from task ISPC)
+*/
+```
+The speedup due to SIMD is of x4.98 while the one for SIMD with multicore is 56.4, concluding that the multicore paralelization.
+Therefore, the multicore paralelization provides 56.4 / 4.98 = x11.32 speedup.
+
+#### Task 2
+
+```cpp
+/*
+Task 2 Output
+[sqrt serial]:          [13.955] ms
+[sqrt ispc]:            [9.143] ms
+[sqrt task ispc]:       [7.882] ms
+                                (1.53x speedup from ISPC)
+                                (1.77x speedup from task ISPC)
+                                (56.40x speedup from task ISPC)
+*/
+```
+The answer here is to set the initial values to 1 (which is the initial guess) so the sequential version is able to finnish in the first iteration. 
+
+#### Task 3
+
+```cpp
+/*
+Task 3 Output
+[sqrt serial]:          [13.775] ms
+[sqrt ispc]:            [9.481] ms
+[sqrt task ispc]:       [7.791] ms
+                                (1.45x speedup from ISPC)
+                                (1.77x speedup from task ISPC)
+*/
+```
+
+After setting all the array values to 1 (which is the initial guess so the calculation of the sqrt goes down to O(1)).
+We can see that the speedup both for SIMD and multicore parallelization it's almost none, which can be explained by using the same concepts when building divide and conquer algorithms.
+This is a case where we have to split the problem, solve it, and then join the results. Both splitting and joining have a cost, but as long as the computation is faster there is margin for improvement. Since here the computation of every instance is almost the same, and is really low, adding more cores or ALU units can not significantly overcome the cost of splitting and joining.
+
+
+---
+
 ## Program 4: BLAS `saxpy`
 
 ### Task 1 — ISPC Performance on saxpy
