@@ -38,8 +38,8 @@ int main() {
     // Second question code populates array with 1s (which is the starting guess)
     values[i] = 1;
 
-    // Third question code populates arrray with 3 - 1e-5 (Farthest point from initial guess)
-    values[i] = 3 - 1e-5;
+    // Third question code populates arrray with 1s (slowest ISPC to serial ratio)
+    values[i] = 1;
   }
 
   // generate a gold version to check results

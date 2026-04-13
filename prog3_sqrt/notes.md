@@ -28,16 +28,12 @@ Output received
 
 **Third Question**
 
-After setting all the values of the array to 3 - 1e-5 (almost 3) which is the furthest point from the initial guess we can provide, we can see a noticeable improvement in both SIMD and multicore paralelization being respectively:
-SIMD x7.43 speedup
-Multicore 69.14 / 7.43 = x9.3
-We can justify this looking back at the second question. In this case, splitting and joining for both for SIMD and multicore was worth it as the compution was more expensive and being able to do it in parallel saved a lot of time compared to doing it sequentialy.
+For this question we want to reduce the speedup given by the ISPC. As seen before, the value 1 makes the computation trivial, leading to the overhead of the parallel version set up and join being significant in comparison with the computing time, and so, providing almost x1~x2 speedup.
 
 /*
-Output received
-[sqrt serial]:          [2726.011] ms
-[sqrt ispc]:            [366.907] ms
-[sqrt task ispc]:       [39.430] ms
-                                (7.43x speedup from ISPC)
-                                (69.14x speedup from task ISPC)
+[sqrt serial]:          [13.775] ms
+[sqrt ispc]:            [9.481] ms
+[sqrt task ispc]:       [7.791] ms
+                                (1.45x speedup from ISPC)
+                                (1.77x speedup from task ISPC)
 */
